@@ -41,18 +41,18 @@
 static char buf[STRLEN_COORDVALUE + 1];
 
 static const float froundvalues[MAX_PRECISION + 1] =
-{
-    0.5f,                // 0
-    0.05f,               // 1
-    0.005f,              // 2
-    0.0005f,             // 3
-    0.00005f,            // 4
-    0.000005f,           // 5
-    0.0000005f,          // 6
-    0.00000005f,         // 7
-    0.000000005f,        // 8
-    0.0000000005f,       // 9
-    0.00000000005f       // 10
+    {
+        0.5f,          // 0
+        0.05f,         // 1
+        0.005f,        // 2
+        0.0005f,       // 3
+        0.00005f,      // 4
+        0.000005f,     // 5
+        0.0000005f,    // 6
+        0.00000005f,   // 7
+        0.000000005f,  // 8
+        0.0000000005f, // 9
+        0.00000000005f // 10
 };
 
 #if N_AXIS > 6 && defined(AXIS_REMAP_ABC2UVW)
@@ -64,36 +64,44 @@ char const *const axis_letter[N_AXIS] = {
     "Y",
     "Z"
 #if N_AXIS > 3
-  #if !AXIS_REMAP_ABC2UVW
-    ,"A"
-  #else
-    ,"U"
-  #endif
+#if !AXIS_REMAP_ABC2UVW
+    ,
+    "A"
+#else
+    ,
+    "U"
+#endif
 #endif
 #if N_AXIS > 4
-  #if !AXIS_REMAP_ABC2UVW
-    ,"B"
-  #else
-    ,"V"
-  #endif
+#if !AXIS_REMAP_ABC2UVW
+    ,
+    "C"
+#else
+    ,
+    "W"
+#endif
 #endif
 #if N_AXIS > 5
- #if !AXIS_REMAP_ABC2UVW
-    ,"C"
-  #else
-    ,"W"
-  #endif
+#if !AXIS_REMAP_ABC2UVW
+    ,
+    "C"
+#else
+    ,
+    "W"
+#endif
 #endif
 #if N_AXIS > 6
-    ,"U"
+    ,
+    "U"
 #endif
 #if N_AXIS > 7
-    ,"V"
+    ,
+    "V"
 #endif
 };
 
 // Converts an uint32 variable to string.
-char *uitoa (uint32_t n)
+char *uitoa(uint32_t n)
 {
     char *bptr = buf + sizeof(buf);
 
@@ -101,10 +109,12 @@ char *uitoa (uint32_t n)
 
     if (n == 0)
         *--bptr = '0';
-    else while (n) {
-        *--bptr = '0' + (n % 10);
-        n /= 10;
-    }
+    else
+        while (n)
+        {
+            *--bptr = '0' + (n % 10);
+            n /= 10;
+        }
 
     return bptr;
 }
@@ -112,7 +122,7 @@ char *uitoa (uint32_t n)
 // Convert float to string by immediately converting to integers.
 // Number of decimal places, which are tracked by a counter, must be set by the user.
 // The integers is then efficiently converted to a string.
-char *ftoa (float n, uint8_t decimal_places)
+char *ftoa(float n, uint8_t decimal_places)
 {
     bool isNegative;
     char *bptr = buf + sizeof(buf);
@@ -126,12 +136,14 @@ char *ftoa (float n, uint8_t decimal_places)
 
     uint32_t a = (uint32_t)n;
 
-    if (decimal_places) {
+    if (decimal_places)
+    {
 
         n -= (float)a;
 
         uint_fast8_t decimals = decimal_places;
-        while (decimals >= 2) { // Quickly convert values expected to be E0 to E-4.
+        while (decimals >= 2)
+        { // Quickly convert values expected to be E0 to E-4.
             n *= 100.0f;
             decimals -= 2;
         }
@@ -141,33 +153,38 @@ char *ftoa (float n, uint8_t decimal_places)
 
         uint32_t b = (uint32_t)n;
 
-        while(decimal_places--) {
-            if(b) {
+        while (decimal_places--)
+        {
+            if (b)
+            {
                 *--bptr = (b % 10) + '0'; // Get digit
                 b /= 10;
-            } else
+            }
+            else
                 *--bptr = '0';
         }
     }
 
     *--bptr = '.'; // Always add decimal point (TODO: is this really needed?)
 
-    if(a == 0)
+    if (a == 0)
         *--bptr = '0';
 
-    else while(a) {
-        *--bptr = (a % 10) + '0'; // Get digit
-        a /= 10;
-    }
+    else
+        while (a)
+        {
+            *--bptr = (a % 10) + '0'; // Get digit
+            a /= 10;
+        }
 
-    if(isNegative)
+    if (isNegative)
         *--bptr = '-';
 
     return bptr;
 }
 
 // Extracts an unsigned integer value from a string.
-status_code_t read_uint (char *line, uint_fast8_t *char_counter, uint32_t *uint_ptr)
+status_code_t read_uint(char *line, uint_fast8_t *char_counter, uint32_t *uint_ptr)
 {
     char *ptr = line + *char_counter;
     int_fast8_t exp = 0;
@@ -186,22 +203,27 @@ status_code_t read_uint (char *line, uint_fast8_t *char_counter, uint32_t *uint_
         c = *ptr++;
 
     // Extract number into fast integer. Track decimal in terms of exponent value.
-    while(c) {
+    while (c)
+    {
         c -= '0';
-        if (c <= 9) {
+        if (c <= 9)
+        {
             ok = true;
-            if(!isdecimal && (c != 0 || intval))
+            if (!isdecimal && (c != 0 || intval))
                 ndigit++;
             if (isdecimal && c != 0)
                 return Status_GcodeCommandValueNotInteger;
 
-            if ((ndigit <= 9 || c <= 4) && intval <= 429496729) {
+            if ((ndigit <= 9 || c <= 4) && intval <= 429496729)
+            {
                 intval = (((intval << 2) + intval) << 1) + c; // intval * 10 + c
-            } else if (!isdecimal)
-                exp++;  // Drop overflow digits
-        } else if (c == (uint_fast8_t)('.' - '0') && !isdecimal)
+            }
+            else if (!isdecimal)
+                exp++; // Drop overflow digits
+        }
+        else if (c == (uint_fast8_t)('.' - '0') && !isdecimal)
             isdecimal = true;
-         else
+        else
             break;
 
         c = *ptr++;
@@ -212,7 +234,7 @@ status_code_t read_uint (char *line, uint_fast8_t *char_counter, uint32_t *uint_
     if (!ok)
         return Status_BadNumberFormat;
 
-    *uint_ptr = intval; // Assign value.
+    *uint_ptr = intval;             // Assign value.
     *char_counter = ptr - line - 1; // Set char_counter to next statement
 
     return Status_OK;
@@ -225,7 +247,7 @@ status_code_t read_uint (char *line, uint_fast8_t *char_counter, uint32_t *uint_
 // Scientific notation is officially not supported by g-code, and the 'E' character may
 // be a g-code word on some CNC systems. So, 'E' notation will not be recognized.
 // NOTE: Thanks to Radu-Eosif Mihailescu for identifying the issues with using strtod().
-bool read_float (char *line, uint_fast8_t *char_counter, float *float_ptr)
+bool read_float(char *line, uint_fast8_t *char_counter, float *float_ptr)
 {
     char *ptr = line + *char_counter;
     int_fast8_t exp = 0;
@@ -241,21 +263,26 @@ bool read_float (char *line, uint_fast8_t *char_counter, float *float_ptr)
         c = *ptr++;
 
     // Extract number into fast integer. Track decimal in terms of exponent value.
-    while(c) {
+    while (c)
+    {
         c -= '0';
-        if (c <= 9) {
+        if (c <= 9)
+        {
             ok = true;
-            if(c != 0 || intval)
+            if (c != 0 || intval)
                 ndigit++;
-            if (ndigit <= MAX_INT_DIGITS) {
+            if (ndigit <= MAX_INT_DIGITS)
+            {
                 if (isdecimal)
                     exp--;
                 intval = (((intval << 2) + intval) << 1) + c; // intval * 10 + c
-            } else if (!isdecimal)
-                exp++;  // Drop overflow digits
-        } else if (c == (uint_fast8_t)('.' - '0') && !isdecimal)
+            }
+            else if (!isdecimal)
+                exp++; // Drop overflow digits
+        }
+        else if (c == (uint_fast8_t)('.' - '0') && !isdecimal)
             isdecimal = true;
-         else
+        else
             break;
 
         c = *ptr++;
@@ -270,73 +297,82 @@ bool read_float (char *line, uint_fast8_t *char_counter, float *float_ptr)
 
     // Apply decimal. Should perform no more than two floating point multiplications for the
     // expected range of E0 to E-4.
-    if (fval != 0.0f) {
-        while (exp <= -2) {
+    if (fval != 0.0f)
+    {
+        while (exp <= -2)
+        {
             fval *= 0.01f;
             exp += 2;
         }
         if (exp < 0)
             fval *= 0.1f;
-        else if (exp > 0) do {
-            fval *= 10.0f;
-        } while (--exp > 0);
+        else if (exp > 0)
+            do
+            {
+                fval *= 10.0f;
+            } while (--exp > 0);
     }
 
     // Assign floating point value with correct sign.
-    *float_ptr = isnegative ? - fval : fval;
+    *float_ptr = isnegative ? -fval : fval;
     *char_counter = ptr - line - 1; // Set char_counter to next statement
 
     return true;
 }
 
 // Returns true if float value is a whole number (integer)
-bool isintf (float value)
+bool isintf(float value)
 {
     return value != NAN && fabsf(value - truncf(value)) < 0.001f;
 }
 
 // Non-blocking delay function used for general operation and suspend features.
-void delay_sec (float seconds, delaymode_t mode)
+void delay_sec(float seconds, delaymode_t mode)
 {
     uint_fast16_t i = (uint_fast16_t)ceilf((1000.0f / DWELL_TIME_STEP) * seconds) + 1;
 
-    while (--i && !sys.abort) {
-        if (mode == DelayMode_Dwell) {
+    while (--i && !sys.abort)
+    {
+        if (mode == DelayMode_Dwell)
+        {
             protocol_execute_realtime();
-        } else { // DelayMode_SysSuspend
-          // Execute rt_system() only to avoid nesting suspend loops.
-          protocol_exec_rt_system();
-          if (state_door_reopened()) // Bail, if safety door reopens.
-              return;
+        }
+        else
+        { // DelayMode_SysSuspend
+            // Execute rt_system() only to avoid nesting suspend loops.
+            protocol_exec_rt_system();
+            if (state_door_reopened()) // Bail, if safety door reopens.
+                return;
         }
         hal.delay_ms(DWELL_TIME_STEP, 0); // Delay DWELL_TIME_STEP increment
     }
 }
 
-
-float convert_delta_vector_to_unit_vector (float *vector)
+float convert_delta_vector_to_unit_vector(float *vector)
 {
     uint_fast8_t idx = N_AXIS;
     float magnitude = 0.0f, inv_magnitude;
 
-    do {
+    do
+    {
         if (vector[--idx] != 0.0f)
             magnitude += vector[idx] * vector[idx];
-    } while(idx);
+    } while (idx);
 
     idx = N_AXIS;
     magnitude = sqrtf(magnitude);
     inv_magnitude = 1.0f / magnitude;
 
-    do {
+    do
+    {
         vector[--idx] *= inv_magnitude;
-    } while(idx);
+    } while (idx);
 
     return magnitude;
 }
 
 // parse ISO8601 datetime: YYYY-MM-DDTHH:MM:SSZxxx
-struct tm *get_datetime (const char *s)
+struct tm *get_datetime(const char *s)
 {
     static struct tm dt;
     PROGMEM static const uint8_t mdays[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -347,61 +383,66 @@ struct tm *get_datetime (const char *s)
     memset(&dt, 0, sizeof(struct tm));
     dt.tm_year = dt.tm_mon = dt.tm_mday = dt.tm_hour = dt.tm_min = dt.tm_sec = -1;
 
-    do {
+    do
+    {
         c = *s1++;
 
-        if(isdigit(c))
+        if (isdigit(c))
             value = (value * 10) + c - '0';
 
-        else if(!(c == '-' || c == ':' || c == 'T' || c == 'Z' || c == '\0'))
+        else if (!(c == '-' || c == ':' || c == 'T' || c == 'Z' || c == '\0'))
             break;
 
-        else {
-            switch(idx) {
-                case 0:
-                    if(c == '-' && value >= 1970 && value <= 2099)
-                        dt.tm_year = value - 1900;
-                    break;
+        else
+        {
+            switch (idx)
+            {
+            case 0:
+                if (c == '-' && value >= 1970 && value <= 2099)
+                    dt.tm_year = value - 1900;
+                break;
 
-                case 1:
-                    if(c == '-' && value >= 1 && value <= 12)
-                        dt.tm_mon = value - 1;
-                    break;
+            case 1:
+                if (c == '-' && value >= 1 && value <= 12)
+                    dt.tm_mon = value - 1;
+                break;
 
-                case 2:
-                    if(c == 'T' && value >= 1 && value <= (mdays[dt.tm_mon >= 0 ? dt.tm_mon : 0] + (dt.tm_mon == 1 && dt.tm_year != 100 && (dt.tm_year % 4) == 0 ? 1 : 0)))
-                        dt.tm_mday = value;
-                    break;
+            case 2:
+                if (c == 'T' && value >= 1 && value <= (mdays[dt.tm_mon >= 0 ? dt.tm_mon : 0] + (dt.tm_mon == 1 && dt.tm_year != 100 && (dt.tm_year % 4) == 0 ? 1 : 0)))
+                    dt.tm_mday = value;
+                break;
 
-                case 3:
-                    if(c == ':' && value <= 23)
-                        dt.tm_hour = value;
-                    break;
+            case 3:
+                if (c == ':' && value <= 23)
+                    dt.tm_hour = value;
+                break;
 
-                case 4:
-                    if(c == ':' && value <= 59)
-                        dt.tm_min = value;
-                    break;
+            case 4:
+                if (c == ':' && value <= 59)
+                    dt.tm_min = value;
+                break;
 
-                case 5:
-                    if((c == 'Z' || c == '\0') && value <= 59)
-                        dt.tm_sec = value;
-                    break;
+            case 5:
+                if ((c == 'Z' || c == '\0') && value <= 59)
+                    dt.tm_sec = value;
+                break;
             }
             idx++;
             value = 0;
         }
-    } while(c);
+    } while (c);
 
     return (dt.tm_year | dt.tm_mon | dt.tm_mday | dt.tm_hour | dt.tm_min | dt.tm_sec) > 0 ? &dt : NULL;
 }
 
 // calculate checksum byte for data
-uint8_t calc_checksum (uint8_t *data, uint32_t size) {
+uint8_t calc_checksum(uint8_t *data, uint32_t size)
+{
 
     uint8_t checksum = 0;
 
-    while(size--) {
+    while (size--)
+    {
         checksum = (checksum << 1) | (checksum >> 7);
         checksum += *(data++);
     }
@@ -410,23 +451,24 @@ uint8_t calc_checksum (uint8_t *data, uint32_t size) {
 }
 
 // Remove spaces from and convert string to uppercase (in situ)
-char *strcaps (char *s)
+char *strcaps(char *s)
 {
     char c, *s1 = s, *s2 = s;
 
-    do {
+    do
+    {
         c = *s1++;
-        if(c != ' ')
+        if (c != ' ')
             *s2++ = CAPS(c);
-    } while(c);
+    } while (c);
 
-    if(s1 != s2)
+    if (s1 != s2)
         *s2 = '\0';
 
     return s;
 }
 
-void dummy_handler (void)
+void dummy_handler(void)
 {
     // NOOP
 }

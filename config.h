@@ -39,7 +39,7 @@ specific needs, i.e. performance tuning or adjusting to non-typical machines.
 If more than 3 axes are configured a compliant driver and board map file is needed.
  */
 #ifndef N_AXIS
-#define N_AXIS 3 // Number of axes
+#define N_AXIS 5 // Number of axes
 #endif
 
 /*! \def AXIS_REMAP_ABC2UVW
@@ -99,7 +99,7 @@ folder of the repo. See file comments on how to gather spindle data and run the 
 generate a solution.
 */
 #if !defined ENABLE_SPINDLE_LINEARIZATION || defined __DOXYGEN__
-#define ENABLE_SPINDLE_LINEARIZATION 0  // Set to 1 to enable spindle RPM linearization. Requires compatible driver if enabled.
+#define ENABLE_SPINDLE_LINEARIZATION 0 // Set to 1 to enable spindle RPM linearization. Requires compatible driver if enabled.
 #endif
 
 /*! \def SPINDLE_NPWM_PIECES
@@ -111,7 +111,7 @@ generate a solution.
 
 #include "nuts_bolts.h"
 
-//#define KINEMATICS_API // Uncomment to add HAL entry points for custom kinematics
+// #define KINEMATICS_API // Uncomment to add HAL entry points for custom kinematics
 
 /*! \def MASLOW_ROUTER
 \brief Enable Maslow router kinematics.
@@ -152,7 +152,6 @@ Experimental - testing required and homing needs to be worked out.
 #define POLAR_ROBOT Off
 #endif
 
-
 /*! \def COREXY
 \brief Enable CoreXY kinematics. Use ONLY with CoreXY machines.
 <br>__IMPORTANT:__ If homing is enabled, you must reconfigure the homing cycle \#defines above to
@@ -192,8 +191,8 @@ or EMI triggering the related interrupt falsely or too many times.
 #define ENABLE_PATH_BLENDING Off // Do NOT enable unless working on adding this feature!
 
 // Enables code for debugging purposes. Not for general use and always in constant flux.
-//#define DEBUG // Uncomment to enable. Default disabled.
-//#define DEBUGOUT 0 // Uncomment to claim serial port with given instance number and add HAL entry point for debug output.
+// #define DEBUG // Uncomment to enable. Default disabled.
+// #define DEBUGOUT 0 // Uncomment to claim serial port with given instance number and add HAL entry point for debug output.
 
 /*! @name Status report frequency
 Some status report data isn't necessary for realtime, only intermittently, because the values don't
@@ -208,16 +207,16 @@ to be refreshed very often, on the order of a several seconds.
 */
 ///@{
 #if !defined REPORT_OVERRIDE_REFRESH_BUSY_COUNT || defined __DOXYGEN__
-#define REPORT_OVERRIDE_REFRESH_BUSY_COUNT 20   // (1-255)
+#define REPORT_OVERRIDE_REFRESH_BUSY_COUNT 20 // (1-255)
 #endif
 #if !defined REPORT_OVERRIDE_REFRESH_IDLE_COUNT || defined __DOXYGEN__
-#define REPORT_OVERRIDE_REFRESH_IDLE_COUNT 10   // (1-255) Must be less than or equal to the busy count
+#define REPORT_OVERRIDE_REFRESH_IDLE_COUNT 10 // (1-255) Must be less than or equal to the busy count
 #endif
 #if !defined REPORT_WCO_REFRESH_BUSY_COUNT || defined __DOXYGEN__
-#define REPORT_WCO_REFRESH_BUSY_COUNT 30        // (2-255)
+#define REPORT_WCO_REFRESH_BUSY_COUNT 30 // (2-255)
 #endif
 #if !defined REPORT_WCO_REFRESH_IDLE_COUNT || defined __DOXYGEN__
-#define REPORT_WCO_REFRESH_IDLE_COUNT 10        // (2-255) Must be less than or equal to the busy count
+#define REPORT_WCO_REFRESH_IDLE_COUNT 10 // (2-255) Must be less than or equal to the busy count
 #endif
 ///@}
 
@@ -240,7 +239,7 @@ certain the step segment buffer is increased/decreased to account for these chan
 // step rate is strictly limited by the CPU speed and will change if something other than an AVR running
 // at 16MHz is used.
 // NOTE: For now disabled, will enable if flash space permits.
-//#define MAX_STEP_RATE_HZ 30000 // Hz
+// #define MAX_STEP_RATE_HZ 30000 // Hz
 
 /*! \def REPORT_ECHO_LINE_RECEIVED
 \brief
@@ -331,7 +330,6 @@ much greater than this. The default setting should capture most, if not all, ful
 #endif
 ///@}
 
-
 /*! \def DWELL_TIME_STEP
 \brief Time delay increments performed during a dwell.
 The default value is set at 50ms, which provides a maximum time delay of roughly 55 minutes,
@@ -392,10 +390,10 @@ the locate phase begins and uses the homing pull-off distance setting times the
 */
 ///@{
 #if !defined HOMING_AXIS_SEARCH_SCALAR || defined __DOXYGEN__
-#define HOMING_AXIS_SEARCH_SCALAR  1.5f // Must be > 1 to ensure limit switch will be engaged.
+#define HOMING_AXIS_SEARCH_SCALAR 1.5f // Must be > 1 to ensure limit switch will be engaged.
 #endif
 #if !defined HOMING_AXIS_LOCATE_SCALAR || defined __DOXYGEN__
-#define HOMING_AXIS_LOCATE_SCALAR  10.0f// Must be > 1 to ensure limit switch is cleared.
+#define HOMING_AXIS_LOCATE_SCALAR 10.0f // Must be > 1 to ensure limit switch is cleared.
 #endif
 ///@}
 
@@ -440,7 +438,7 @@ cases where these commands may be undesirable. Simply change desired macro to \r
 #define SETTINGS_RESTORE_STARTUP_LINES On //!< Default enabled. Set to \ref Off or 0 to disable.
 #endif
 #if !defined SETTINGS_RESTORE_BUILD_INFO || defined __DOXYGEN__
-#define SETTINGS_RESTORE_BUILD_INFO  On //!< Default enabled. Set to \ref Off or 0 to disable.
+#define SETTINGS_RESTORE_BUILD_INFO On //!< Default enabled. Set to \ref Off or 0 to disable.
 #endif
 #if !defined SETTINGS_RESTORE_DRIVER_PARAMETERS || defined __DOXYGEN__
 #define SETTINGS_RESTORE_DRIVER_PARAMETERS On //!< Default enabled. Set to \ref Off or 0 to disable.
@@ -538,7 +536,7 @@ Allow use of UVW axis words for non-modal relative lathe motion.
 #endif
 
 // Max number of entries in log for PID data reporting, to be used for tuning
-//#define PID_LOG 1000 // Default disabled. Uncomment to enable.
+// #define PID_LOG 1000 // Default disabled. Uncomment to enable.
 
 // End compile time only default configuration
 
@@ -755,7 +753,7 @@ allowing their use from manual input, eg. from a terminal or MDI.
 ///@}
 
 /*! @name $60 - Setting_RestoreOverrides
-*/
+ */
 ///@{
 #if !defined DEFAULT_RESET_OVERRIDES || defined __DOXYGEN__
 #define DEFAULT_RESET_OVERRIDES Off
@@ -763,7 +761,7 @@ allowing their use from manual input, eg. from a terminal or MDI.
 ///@}
 
 /*! @name $62 - Setting_SleepEnable
-*/
+ */
 ///@{
 #if !defined DEFAULT_SLEEP_ENABLE || defined __DOXYGEN__
 #define DEFAULT_SLEEP_ENABLE Off
@@ -843,16 +841,16 @@ having trouble keeping up with planning new incoming motions as they are execute
 __NOTE:__ these definitions are only referenced in this file. Do __NOT__ change!
 */
 ///@{
-#define SIGNALS_RESET_BIT (1<<0)
-#define SIGNALS_FEEDHOLD_BIT (1<<1)
-#define SIGNALS_CYCLESTART_BIT (1<<2)
-#define SIGNALS_SAFETYDOOR_BIT (1<<3)
-#define SIGNALS_BLOCKDELETE_BIT (1<<4)
-#define SIGNALS_STOPDISABLE_BIT (1<<5)
-#define SIGNALS_ESTOP_BIT (1<<6)
-#define SIGNALS_PROBE_CONNECTED_BIT (1<<7)
-#define SIGNALS_MOTOR_FAULT_BIT (1<<8)
-#define SIGNALS_BITMASK (SIGNALS_RESET_BIT|SIGNALS_FEEDHOLD_BIT|SIGNALS_CYCLESTART_BIT|SIGNALS_SAFETYDOOR_BIT|SIGNALS_BLOCKDELETE_BIT|SIGNALS_STOPDISABLE_BIT|SIGNALS_ESTOP_BIT|SIGNALS_PROBE_CONNECTED_BIT|SIGNALS_MOTOR_FAULT_BIT)
+#define SIGNALS_RESET_BIT (1 << 0)
+#define SIGNALS_FEEDHOLD_BIT (1 << 1)
+#define SIGNALS_CYCLESTART_BIT (1 << 2)
+#define SIGNALS_SAFETYDOOR_BIT (1 << 3)
+#define SIGNALS_BLOCKDELETE_BIT (1 << 4)
+#define SIGNALS_STOPDISABLE_BIT (1 << 5)
+#define SIGNALS_ESTOP_BIT (1 << 6)
+#define SIGNALS_PROBE_CONNECTED_BIT (1 << 7)
+#define SIGNALS_MOTOR_FAULT_BIT (1 << 8)
+#define SIGNALS_BITMASK (SIGNALS_RESET_BIT | SIGNALS_FEEDHOLD_BIT | SIGNALS_CYCLESTART_BIT | SIGNALS_SAFETYDOOR_BIT | SIGNALS_BLOCKDELETE_BIT | SIGNALS_STOPDISABLE_BIT | SIGNALS_ESTOP_BIT | SIGNALS_PROBE_CONNECTED_BIT | SIGNALS_MOTOR_FAULT_BIT)
 ///@}
 
 #endif
@@ -915,7 +913,7 @@ be now connect to Vcc instead of ground.
 ///@}
 
 /*! @name $20 - Setting_SoftLimitsEnable
-*/
+ */
 ///@{
 #if !defined DEFAULT_SOFT_LIMIT_ENABLE || defined __DOXYGEN__
 #define DEFAULT_SOFT_LIMIT_ENABLE Off
@@ -923,7 +921,7 @@ be now connect to Vcc instead of ground.
 ///@}
 
 /*! @name $21 - Setting_HardLimitsEnable
-*/
+ */
 ///@{
 /*! \def DEFAULT_HARD_LIMIT_ENABLE
 \brief
@@ -955,15 +953,15 @@ limits of how far or little a valid fail distance is.
 */
 ///@{
 /*! @name $347 - Setting_DualAxisLengthFailPercent
-*/
+ */
 ///@{
 #if !defined DEFAULT_DUAL_AXIS_HOMING_FAIL_AXIS_LENGTH_PERCENT || defined __DOXYGEN__
-#define DEFAULT_DUAL_AXIS_HOMING_FAIL_AXIS_LENGTH_PERCENT 5.0f  // Float (percent)
+#define DEFAULT_DUAL_AXIS_HOMING_FAIL_AXIS_LENGTH_PERCENT 5.0f // Float (percent)
 #endif
 ///@}
 
 /*! @name $348 - Setting_DualAxisLengthFailMin
-*/
+ */
 ///@{
 #if !defined DEFAULT_DUAL_AXIS_HOMING_FAIL_DISTANCE_MIN || defined __DOXYGEN__
 #define DEFAULT_DUAL_AXIS_HOMING_FAIL_DISTANCE_MIN 2.5f // Float (mm)
@@ -975,7 +973,7 @@ limits of how far or little a valid fail distance is.
  */
 ///@{
 #if !defined DEFAULT_DUAL_AXIS_HOMING_FAIL_DISTANCE_MAX || defined __DOXYGEN__
-#define DEFAULT_DUAL_AXIS_HOMING_FAIL_DISTANCE_MAX 25.0f  // Float (mm)
+#define DEFAULT_DUAL_AXIS_HOMING_FAIL_DISTANCE_MAX 25.0f // Float (mm)
 #endif
 ///@}
 
@@ -990,14 +988,14 @@ Useful for some pre-built electronic boards.
 #define DEFAULT_INVERT_COOLANT_FLOOD_PIN Off
 #endif
 #if !defined DEFAULT_INVERT_COOLANT_MIST_PIN || defined __DOXYGEN__
-#define DEFAULT_INVERT_COOLANT_MIST_PIN Off  // NOTE: not supported by all drivers.
+#define DEFAULT_INVERT_COOLANT_MIST_PIN Off // NOTE: not supported by all drivers.
 #endif
 ///@}
 
 // Spindle settings (Group_Spindle)
 
 /*! @name $9 - Setting_SpindlePWMOptions
-*/
+ */
 ///@{
 #if !defined DEFAULT_SPINDLE_ENABLE_OFF_WITH_ZERO_SPEED || defined __DOXYGEN__
 #define DEFAULT_SPINDLE_ENABLE_OFF_WITH_ZERO_SPEED Off
@@ -1020,7 +1018,7 @@ Inverts the selected spindle output signals from active high to active low. Usef
 ///@}
 
 /*! @name $30 - Setting_RpmMax
-*/
+ */
 ///@{
 #if !defined DEFAULT_SPINDLE_RPM_MAX || defined __DOXYGEN__
 #define DEFAULT_SPINDLE_RPM_MAX 1000.0f // rpm
@@ -1028,7 +1026,7 @@ Inverts the selected spindle output signals from active high to active low. Usef
 ///@}
 
 /*! @name $31 - Setting_RpmMin
-*/
+ */
 ///@{
 #if !defined DEFAULT_SPINDLE_RPM_MIN || defined __DOXYGEN__
 #define DEFAULT_SPINDLE_RPM_MIN 0.0f // rpm
@@ -1036,7 +1034,7 @@ Inverts the selected spindle output signals from active high to active low. Usef
 ///@}
 
 /*! @name $33 - Setting_PWMFreq
-*/
+ */
 ///@{
 #if !defined DEFAULT_SPINDLE_PWM_FREQ || defined __DOXYGEN__
 #define DEFAULT_SPINDLE_PWM_FREQ 5000 // Hz
@@ -1044,7 +1042,7 @@ Inverts the selected spindle output signals from active high to active low. Usef
 ///@}
 
 /*! @name $34 - Setting_PWMOffValue
-*/
+ */
 ///@{
 #if !defined DEFAULT_SPINDLE_PWM_OFF_VALUE || defined __DOXYGEN__
 #define DEFAULT_SPINDLE_PWM_OFF_VALUE 0.0f // Percent
@@ -1069,7 +1067,7 @@ and less range over the total 255 PWM levels to signal different spindle speeds.
 ///@}
 
 /*! @name $36 - Setting_PWMMaxValue
-*/
+ */
 ///@{
 #if !defined DEFAULT_SPINDLE_PWM_MAX_VALUE || defined __DOXYGEN__
 #define DEFAULT_SPINDLE_PWM_MAX_VALUE 100.0f // Percent
@@ -1090,7 +1088,7 @@ Default value is 0, meaning spindle sync is disabled
 ///@}
 
 /*! @name $340 - Setting_SpindleAtSpeedTolerance
-*/
+ */
 ///@{
 #if !defined DEFAULT_SPINDLE_AT_SPEED_TOLERANCE || defined __DOXYGEN__
 #define DEFAULT_SPINDLE_AT_SPEED_TOLERANCE 0.0f // Percent - 0 means not checked
@@ -1107,16 +1105,16 @@ Default value is 0, meaning spindle sync is disabled
 // Closed loop spindle settings (Group_Spindle_ClosedLoop)
 
 #ifndef DEFAULT_SPINDLE_P_GAIN
-#define DEFAULT_SPINDLE_P_GAIN  1.0f
+#define DEFAULT_SPINDLE_P_GAIN 1.0f
 #endif
 #ifndef DEFAULT_SPINDLE_I_GAIN
-#define DEFAULT_SPINDLE_I_GAIN  0.01f
+#define DEFAULT_SPINDLE_I_GAIN 0.01f
 #endif
 #ifndef DEFAULT_SPINDLE_D_GAIN
-#define DEFAULT_SPINDLE_D_GAIN  0.0f
+#define DEFAULT_SPINDLE_D_GAIN 0.0f
 #endif
 #ifndef DEFAULT_SPINDLE_I_MAX
-#define DEFAULT_SPINDLE_I_MAX   10.0f
+#define DEFAULT_SPINDLE_I_MAX 10.0f
 #endif
 
 #if ENABLE_SPINDLE_LINEARIZATION || defined __DOXYGEN__
@@ -1126,7 +1124,7 @@ Defines the parameters for the first entry in the spindle RPM linearization tabl
 */
 ///@{
 #if !defined DEFAULT_RPM_POINT01 || defined __DOXYGEN__
-#define DEFAULT_RPM_POINT01 DEFAULT_SPINDLE_RPM_MIN  // Don not change! Set DEFAULT_SPINDLE_RPM_MIN instead.
+#define DEFAULT_RPM_POINT01 DEFAULT_SPINDLE_RPM_MIN // Don not change! Set DEFAULT_SPINDLE_RPM_MIN instead.
 #endif
 #if !defined DEFAULT_RPM_LINE_A1 || defined __DOXYGEN__
 #define DEFAULT_RPM_LINE_A1 3.197101e-03f
@@ -1141,13 +1139,13 @@ Defines the parameters for the second entry in the spindle RPM linearization tab
 */
 ///@{
 #if !defined DEFAULT_RPM_POINT12 || defined __DOXYGEN__
-#define DEFAULT_RPM_POINT12 9627.8  // Set to a float constant to enable.
+#define DEFAULT_RPM_POINT12 9627.8 // Set to a float constant to enable.
 #endif
 #if !defined DEFAULT_RPM_LINE_A2 || defined __DOXYGEN__
-#define DEFAULT_RPM_LINE_A2  1.722950e-2f
+#define DEFAULT_RPM_LINE_A2 1.722950e-2f
 #endif
 #if !defined DEFAULT_RPM_LINE_B2 || defined __DOXYGEN__
-#define DEFAULT_RPM_LINE_B2  1.0f,
+#define DEFAULT_RPM_LINE_B2 1.0f,
 #endif
 ///@}
 
@@ -1156,7 +1154,7 @@ Defines the parameters for the third entry in the spindle RPM linearization tabl
 */
 ///@{
 #if !defined DEFAULT_RPM_POINT23 || defined __DOXYGEN__
-#define DEFAULT_RPM_POINT23 10813.9  // Set to a float constant to enable.
+#define DEFAULT_RPM_POINT23 10813.9 // Set to a float constant to enable.
 #endif
 #if !defined DEFAULT_RPM_LINE_A3 || defined __DOXYGEN__
 #define DEFAULT_RPM_LINE_A3 5.901518e-02f
@@ -1171,13 +1169,13 @@ Defines the parameters for the fourth entry in the spindle RPM linearization tab
 */
 ///@{
 #if !defined DEFAULT_RPM_POINT34 || defined __DOXYGEN__
-#define DEFAULT_RPM_POINT34 NAN  // Set to a float constant to enable.
+#define DEFAULT_RPM_POINT34 NAN // Set to a float constant to enable.
 #endif
 #if !defined DEFAULT_RPM_LINE_A4 || defined __DOXYGEN__
-#define DEFAULT_RPM_LINE_A4  1.203413e-01f
+#define DEFAULT_RPM_LINE_A4 1.203413e-01f
 #endif
 #if !defined DEFAULT_RPM_LINE_B4 || defined __DOXYGEN__
-#define DEFAULT_RPM_LINE_B4  1.151360e+03f
+#define DEFAULT_RPM_LINE_B4 1.151360e+03f
 #endif
 ///@}
 
@@ -1195,18 +1193,18 @@ Defines the parameters for the fourth entry in the spindle RPM linearization tab
 ///@}
 
 /*! @name $342 - Setting_ToolChangeProbingDistance
-*/
+ */
 ///@{
 #if !defined DEFAULT_TOOLCHANGE_PROBING_DISTANCE || defined __DOXYGEN__
-#define DEFAULT_TOOLCHANGE_PROBING_DISTANCE 30  // max probing distance in mm for mode 3
+#define DEFAULT_TOOLCHANGE_PROBING_DISTANCE 30 // max probing distance in mm for mode 3
 #endif
 ///@}
 
 /*! @name $343 - Setting_ToolChangeFeedRate
-*/
+ */
 ///@{
 #if !defined DEFAULT_TOOLCHANGE_FEED_RATE || defined __DOXYGEN__
-#define DEFAULT_TOOLCHANGE_FEED_RATE 25.0f      // mm/min
+#define DEFAULT_TOOLCHANGE_FEED_RATE 25.0f // mm/min
 #endif
 ///@}
 
@@ -1215,20 +1213,20 @@ Defines the parameters for the fourth entry in the spindle RPM linearization tab
  */
 ///@{
 #if !defined DEFAULT_TOOLCHANGE_SEEK_RATE || defined __DOXYGEN__
-#define DEFAULT_TOOLCHANGE_SEEK_RATE 200.0f     // mm/min
+#define DEFAULT_TOOLCHANGE_SEEK_RATE 200.0f // mm/min
 #endif
 ///@}
 
 /*! @name $345 - Setting_ToolChangePulloffRate
-*/
+ */
 ///@{
 #if !defined DEFAULT_TOOLCHANGE_PULLOFF_RATE || defined __DOXYGEN__
-#define DEFAULT_TOOLCHANGE_PULLOFF_RATE 200.0f  // mm/min
+#define DEFAULT_TOOLCHANGE_PULLOFF_RATE 200.0f // mm/min
 #endif
 ///@}
 
 /*! @name $346 - Setting_ToolChangeRestorePosition
-*/
+ */
 ///@{
 #if !defined DEFAULT_TOOLCHANGE_NO_RESTORE_POSITION || defined __DOXYGEN__
 #define DEFAULT_TOOLCHANGE_NO_RESTORE_POSITION Off
@@ -1337,7 +1335,7 @@ Unset bits in the mask results in movement in positive direction.
 ///@}
 
 /*! @name $24 - Setting_HomingFeedRate
-*/
+ */
 ///@{
 #if !defined DEFAULT_HOMING_FEED_RATE || defined __DOXYGEN__
 #define DEFAULT_HOMING_FEED_RATE 25.0f // mm/min
@@ -1345,7 +1343,7 @@ Unset bits in the mask results in movement in positive direction.
 ///@}
 
 /*! @name $25 - Setting_HomingSeekRate
-*/
+ */
 ///@{
 #if !defined DEFAULT_HOMING_SEEK_RATE || defined __DOXYGEN__
 #define DEFAULT_HOMING_SEEK_RATE 500.0f // mm/min
@@ -1353,7 +1351,7 @@ Unset bits in the mask results in movement in positive direction.
 ///@}
 
 /*! @name $26 - Setting_HomingDebounceDelay
-*/
+ */
 ///@{
 #if !defined DEFAULT_HOMING_DEBOUNCE_DELAY || defined __DOXYGEN__
 #define DEFAULT_HOMING_DEBOUNCE_DELAY 250 // msec (0-65k)
@@ -1361,7 +1359,7 @@ Unset bits in the mask results in movement in positive direction.
 ///@}
 
 /*! @name $27 - Setting_HomingPulloff
-*/
+ */
 ///@{
 #if !defined DEFAULT_HOMING_PULLOFF || defined __DOXYGEN__
 #define DEFAULT_HOMING_PULLOFF 1.0f // mm
@@ -1398,42 +1396,50 @@ greater.
 */
 
 /*! @name $44 - Setting_HomingCycle_1
-*/
+ */
 ///@{
 #if !defined DEFAULT_HOMING_CYCLE_0 || defined __DOXYGEN__
-#define DEFAULT_HOMING_CYCLE_0 (Z_AXIS_BIT)             // REQUIRED: First move Z to clear workspace.
+#define DEFAULT_HOMING_CYCLE_0 (Z_AXIS_BIT) // REQUIRED: First move Z to clear workspace.
 #endif
 ///@}
 
 /*! @name $45 - Setting_HomingCycle_2
-*/
+ */
 ///@{
 #if !defined DEFAULT_HOMING_CYCLE_1 || defined __DOXYGEN__
 #if COREXY
-#define DEFAULT_HOMING_CYCLE_1 (X_AXIS_BIT)             // OPTIONAL: Then move X.
+#define DEFAULT_HOMING_CYCLE_1 (X_AXIS_BIT) // OPTIONAL: Then move X.
 #else
-#define DEFAULT_HOMING_CYCLE_1 (X_AXIS_BIT|Y_AXIS_BIT)  // OPTIONAL: Then move X,Y at the same time.
+#define DEFAULT_HOMING_CYCLE_1 (X_AXIS_BIT | Y_AXIS_BIT) // OPTIONAL: Then move X,Y at the same time.
 #endif
 #endif
 ///@}
 
 /*! @name $46 - Setting_HomingCycle_3
-*/
+ */
 ///@{
 #if !defined DEFAULT_HOMING_CYCLE_2 || defined __DOXYGEN__
 #if COREXY
-#define DEFAULT_HOMING_CYCLE_2 (Y_AXIS_BIT)             // OPTIONAL: Then move Y.
+#define DEFAULT_HOMING_CYCLE_2 (Y_AXIS_BIT) // OPTIONAL: Then move Y.
 #else
-#define DEFAULT_HOMING_CYCLE_2 0                        // OPTIONAL: Uncomment and add axes mask to enable
+#define DEFAULT_HOMING_CYCLE_2 0 // OPTIONAL: Uncomment and add axes mask to enable
 #endif
 #endif
 ///@}
 
 /*! @name $47 - Setting_HomingCycle_4
-*/
+ */
 ///@{
 #if (defined A_AXIS && !defined DEFAULT_HOMING_CYCLE_3) || defined __DOXYGEN__
-#define DEFAULT_HOMING_CYCLE_3 0                        // OPTIONAL: Uncomment and add axes mask to enable
+#define DEFAULT_HOMING_CYCLE_3 0 // OPTIONAL: Uncomment and add axes mask to enable
+#endif
+///@}
+
+/*! @name $49 - Setting_HomingCycle_6
+ */
+///@{
+#if (defined C_AXIS && !defined DEFAULT_HOMING_CYCLE_4) || defined __DOXYGEN__
+#define DEFAULT_HOMING_CYCLE_4 0 // OPTIONAL: Uncomment and add axes mask to enable
 #endif
 ///@}
 
@@ -1441,23 +1447,15 @@ greater.
 \ref axismask
  */
 ///@{
-#if (defined B_AXIS && !defined DEFAULT_HOMING_CYCLE_4) || defined __DOXYGEN__
-#define DEFAULT_HOMING_CYCLE_4 0                        // OPTIONAL: Uncomment and add axes mask to enable
-#endif
-///@}
-
-/*! @name $49 - Setting_HomingCycle_6
-*/
-///@{
-#if (defined C_AXIS && !defined DEFAULT_HOMING_CYCLE_5) || defined __DOXYGEN__
-#define DEFAULT_HOMING_CYCLE_5 0                        // OPTIONAL: Uncomment and add axes mask to enable
+#if (defined B_AXIS && !defined DEFAULT_HOMING_CYCLE_5) || defined __DOXYGEN__
+#define DEFAULT_HOMING_CYCLE_5 0 // OPTIONAL: Uncomment and add axes mask to enable
 #endif
 ///@}
 
 // Probing settings (Group_Probing)
 
 /*! @name $6 - Setting_InvertProbePin
-*/
+ */
 ///@{
 #if !defined DEFAULT_PROBE_SIGNAL_INVERT || defined __DOXYGEN__
 #define DEFAULT_PROBE_SIGNAL_INVERT Off
@@ -1465,7 +1463,7 @@ greater.
 ///@}
 
 /*! @name $19 - Setting_ProbePullUpDisable
-*/
+ */
 ///@{
 #if !defined DEFAULT_PROBE_SIGNAL_DISABLE_PULLUP || defined __DOXYGEN__
 #define DEFAULT_PROBE_SIGNAL_DISABLE_PULLUP Off
@@ -1533,7 +1531,7 @@ Define which axis that performs the parking motion
 ///@}
 
 /*! @name $56 - Setting_ParkingPulloutIncrement
-*/
+ */
 ///@{
 #if !defined DEFAULT_PARKING_PULLOUT_INCREMENT || defined __DOXYGEN__
 #define DEFAULT_PARKING_PULLOUT_INCREMENT 5.0f //
@@ -1568,7 +1566,7 @@ Parking fast rate after pull-out in mm/min.
 ///@}
 
 /*! @name $61 - Setting_DoorOptions
-*/
+ */
 ///@{
 /*!
 \brief
@@ -1687,9 +1685,9 @@ Set this value to -1 to invert for all steppers or specify which by mask.*/
 */
 ///@{
 #if !defined DEFAULT_ENABLE_SIGNALS_INVERT_MASK || defined __DOXYGEN__
-#define DEFAULT_ENABLE_SIGNALS_INVERT_MASK (X_AXIS_BIT|Y_AXIS_BIT|Z_AXIS_BIT) // Default disabled. Uncomment to enable.
+#define DEFAULT_ENABLE_SIGNALS_INVERT_MASK (X_AXIS_BIT | Y_AXIS_BIT | Z_AXIS_BIT) // Default disabled. Uncomment to enable.
 #else
-//#define DEFAULT_ENABLE_SIGNALS_INVERT_MASK 1
+// #define DEFAULT_ENABLE_SIGNALS_INVERT_MASK 1
 #endif
 ///@}
 
@@ -1704,7 +1702,7 @@ second motor for ganged/auto squared axes.
 ///@}
 
 /*! @name $29 - Setting_PulseDelayMicroseconds
-*/
+ */
 ///@{
 #if !defined DEFAULT_STEP_PULSE_DELAY || defined __DOXYGEN__
 #define DEFAULT_STEP_PULSE_DELAY 0.0f
@@ -1814,7 +1812,7 @@ Timezone offset from UTC in hours, allowed range is -12.0 - 12.0.
 ///@}
 
 /*! @name 12x - Setting_AxisAcceleration
-*/
+ */
 ///@{
 #if !defined DEFAULT_X_ACCELERATION || defined __DOXYGEN__
 #define DEFAULT_X_ACCELERATION 10.0f // mm/sec^2
@@ -1930,16 +1928,16 @@ __NOTE:__ Must be a positive values.
 #endif
 
 #if (REPORT_WCO_REFRESH_BUSY_COUNT < REPORT_WCO_REFRESH_IDLE_COUNT)
-  #error "WCO busy refresh is less than idle refresh."
+#error "WCO busy refresh is less than idle refresh."
 #endif
 #if (REPORT_OVERRIDE_REFRESH_BUSY_COUNT < REPORT_OVERRIDE_REFRESH_IDLE_COUNT)
-  #error "Override busy refresh is less than idle refresh."
+#error "Override busy refresh is less than idle refresh."
 #endif
 #if (REPORT_WCO_REFRESH_IDLE_COUNT < 2)
-  #error "WCO refresh must be greater than one."
+#error "WCO refresh must be greater than one."
 #endif
 #if (REPORT_OVERRIDE_REFRESH_IDLE_COUNT < 1)
-  #error "Override refresh must be greater than zero."
+#error "Override refresh must be greater than zero."
 #endif
 
 #if DEFAULT_LASER_MODE && DEFAULT_LATHE_MODE
@@ -1978,15 +1976,15 @@ __NOTE:__ Must be a positive values.
 #endif
 
 #if DEFAULT_PARKING_ENABLE > 0
-  #if DEFAULT_HOMING_FORCE_SET_ORIGIN > 0
-    #error "DEFAULT_HOMING_FORCE_SET_ORIGIN is not supported with DEFAULT_PARKING_ENABLE at this time."
-  #endif
+#if DEFAULT_HOMING_FORCE_SET_ORIGIN > 0
+#error "DEFAULT_HOMING_FORCE_SET_ORIGIN is not supported with DEFAULT_PARKING_ENABLE at this time."
+#endif
 #endif
 
 #if DEFAULT_ENABLE_PARKING_OVERRIDE_CONTROL > 0
-  #if DEFAULT_PARKING_ENABLE < 1
-    #error "DEFAULT_ENABLE_PARKING_OVERRIDE_CONTROL must be enabled with DEFAULT_PARKING_ENABLE."
-  #endif
+#if DEFAULT_PARKING_ENABLE < 1
+#error "DEFAULT_ENABLE_PARKING_OVERRIDE_CONTROL must be enabled with DEFAULT_PARKING_ENABLE."
+#endif
 #endif
 
 /*! \page page1 Documentation of some common concepts used in config.h
